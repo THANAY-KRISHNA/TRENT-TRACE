@@ -104,10 +104,17 @@ def main():
         .getOrCreate()
         
     try:
-        # Load raw data
-        print(f"[*] Reading comments from {RAW_DATA_PATH}...")
-        df_raw = spark.read.json(RAW_DATA_PATH)
-        print(f"[+] Total raw records loaded: {df_raw.count()}")
+        # Load raw data via standard Python to avoid Hadoop getSubject issues on Java 25
+        print(f"[*] Reading comments from {RAW_DATA_PATH} using Python loader...")
+        raw_data = []
+        with open(RAW_DATA_PATH, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    raw_data.append(json.loads(line))
+                    
+        print(f"[+] Loaded {len(raw_data)} comments into memory. Converting to Spark DataFrame...")
+        df_raw = spark.createDataFrame(raw_data)
+        print(f"[+] Total raw records in Spark DataFrame: {df_raw.count()}")
         
         # Deduplicate comments by comment_id
         print("[*] Deduplicating and cleaning data...")
