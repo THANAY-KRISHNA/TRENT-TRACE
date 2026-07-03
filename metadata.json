@@ -1,0 +1,6 @@
+{
+  "name": "Trent Trace - Reddit Sentiment Analysis",
+  "description": "A premium, minimalist dashboard decoding public opinion across the front page of the internet using live Reddit feeds and Trent Trace's Gemini NLP engine.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
