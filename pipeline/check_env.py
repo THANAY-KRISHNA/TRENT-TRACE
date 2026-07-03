@@ -2,6 +2,10 @@ import sys
 import subprocess
 import os
 
+# Ensure PySpark uses the active virtual environment's python executable
+os.environ["PYSPARK_PYTHON"] = sys.executable
+os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
+
 def check_python():
     print(f"[*] Python Version: {sys.version}")
     if sys.version_info < (3, 8):
